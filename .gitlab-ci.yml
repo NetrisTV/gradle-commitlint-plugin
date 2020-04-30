@@ -8,4 +8,19 @@ test:
   tags:
     - docker-builder
   script:
-    - ./gradlew -Dorg.gradle.daemon=false test
+    - ./gradlew -Dorg.gradle.daemon=false clean test
+
+publish:
+  stage: publish
+  image: openjdk:11
+  tags:
+    - docker-builder
+  variables:
+    PUBLISH_AUTH: ${NEXUS_AUTH}
+    PUBLISH_URL: ${NEXUS_URL_RELEASE}
+  script:
+    - ./gradlew -Dorg.gradle.daemon=false clean publish
+  only:
+    - tags
+    
+    
