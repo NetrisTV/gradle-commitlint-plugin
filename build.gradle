@@ -14,7 +14,7 @@ publishing {
   publications {
     maven(MavenPublication) {
       groupId = "ru.netris"
-      artifactId = "commitlint-plugin"
+      artifactId = "commitlint"
       version = "${project.version}"
 
       from components.java

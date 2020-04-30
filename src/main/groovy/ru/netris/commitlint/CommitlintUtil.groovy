@@ -1,4 +1,4 @@
-package ru.netris
+package ru.netris.commitlint
 
 import org.gradle.api.InvalidUserDataException
 
