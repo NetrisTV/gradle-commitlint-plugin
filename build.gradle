@@ -1,0 +1,51 @@
+plugins {
+  id "groovy"
+  id "maven-publish"  
+}
+
+repositories {
+  jcenter()
+  mavenLocal()
+  mavenCentral()
+  google()
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      groupId = "ru.netris"
+      artifactId = "commitlint-plugin"
+      version = "${project.version}"
+
+      from components.java
+    }
+    
+  }
+  repositories {
+    maven {
+      url = System.getenv("PUBLISH_URL")
+      
+      credentials(HttpHeaderCredentials) {
+        name = "Authorization"
+        value = System.getenv("PUBLISH_AUTH")
+      }
+      authentication {
+        header(HttpHeaderAuthentication)
+      }
+    }
+  }
+}
+
+dependencies {
+  implementation gradleApi()
+  implementation localGroovy()
+
+  testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+	events "passed", "skipped", "failed"
+  }
+}
