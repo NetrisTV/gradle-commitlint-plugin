@@ -1,0 +1,11 @@
+stages:
+  - test
+  - publish
+
+test:
+  stage: test
+  image: openjdk:11
+  tags:
+    - docker-builder
+  script:
+    - ./gradlew -Dorg.gradle.daemon=false test
