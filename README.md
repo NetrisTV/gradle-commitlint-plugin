@@ -45,8 +45,8 @@ pluginManagement {
 
 ## See also
 
-<https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>
-
+- <https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>
+- <https://plugins.jetbrains.com/plugin/14046-commitlint-conventional-commit>
 
 [1]: https://gitlab.netris.ru/common/commitlint-plugin/-/tags
 [2]: https://www.conventionalcommits.org/en/v1.0.0/
