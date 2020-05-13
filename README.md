@@ -11,7 +11,7 @@ follows:
 ```groovy
 plugins {
   id "com.star-zero.gradle.githook" version "1.2.0"
-  id "ru.netris:commitlint-plugin" version "1.0"
+  id "ru.netris.commitlint" version "1.0"
 }
 
 githook {
