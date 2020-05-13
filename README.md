@@ -11,7 +11,7 @@ follows:
 ```groovy
 plugins {
   id "com.star-zero.gradle.githook" version "1.2.0"
-  id "ru.netris.commitlint" version "1.0"
+  id "ru.netris.commitlint" version "1.2"
 }
 
 githook {
@@ -29,7 +29,7 @@ githook {
 ```groovy
 pluginManagement {
   repositories {
-    maven { url "http://repo.netris.ru/repository/maven-releases/" }
+    maven { url "https://maven.pkg.github.com/NetrisTV/gradle-commitlint-plugin" }
 	gradlePluginPortal()
   }
   resolutionStrategy {
