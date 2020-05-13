@@ -1,6 +1,14 @@
 plugins {
   id "groovy"
+  id "java-gradle-plugin"
   id "maven-publish"  
+  id "com.gradle.plugin-publish" version "0.11.0"
+}
+
+pluginBundle {
+  website = "https://github.com/NetrisTV/gradle-commitlint-plugin"
+  vcsUrl = "https://github.com/NetrisTV/gradle-commitlint-plugin"
+  tags = ["gradle", "commitlint"] 
 }
 
 repositories {
@@ -33,17 +41,18 @@ publishing {
         header(HttpHeaderAuthentication)
       }
     }
-    
-    maven {
-      name = "github"
-      name = "GitHubPackages"
-      url = uri(project.findProperty("gpr.repo") ?: System.getenv("GITHUB_REPO"))
-      credentials {
-        username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-        password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-      }
-    }
   }
+}
+
+gradlePlugin {
+    plugins { 
+        commitlintPlugin { 
+            id = "ru.netris.commitlint"
+            displayName = "commitlint plugin"
+            description = "Simple commitlint plugin for Gradle"
+            implementationClass = "ru.netris.commitlint.CommitlintPlugin"
+        }
+    }
 }
 
 dependencies {
