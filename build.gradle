@@ -19,10 +19,10 @@ publishing {
 
       from components.java
     }
-    
   }
   repositories {
     maven {
+      name = "netris"
       url = System.getenv("PUBLISH_URL")
       
       credentials(HttpHeaderCredentials) {
@@ -31,6 +31,16 @@ publishing {
       }
       authentication {
         header(HttpHeaderAuthentication)
+      }
+    }
+    
+    maven {
+      name = "github"
+      name = "GitHubPackages"
+      url = uri(project.findProperty("gpr.repo") ?: System.getenv("GITHUB_REPO"))
+      credentials {
+        username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+        password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
       }
     }
   }
