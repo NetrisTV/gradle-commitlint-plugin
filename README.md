@@ -29,13 +29,12 @@ githook {
 ```groovy
 pluginManagement {
   repositories {
-    maven { url "https://maven.pkg.github.com/NetrisTV/gradle-commitlint-plugin" }
 	gradlePluginPortal()
   }
   resolutionStrategy {
 	eachPlugin {
       if (requested.id.id == "ru.netris.commitlint") {
-        useModule("ru.netris:commitlint:${requested.version}")
+        useModule("ru.netris:commitlint-plugin:${requested.version}")
       }
 	}
   }
