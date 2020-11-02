@@ -4,7 +4,7 @@ stages:
 
 test:
   stage: test
-  image: openjdk:11
+  image: openjdk:8
   tags:
     - docker-builder
   script:
@@ -12,7 +12,7 @@ test:
 
 publish:
   stage: publish
-  image: openjdk:11
+  image: openjdk:8
   tags:
     - docker-builder
   variables:
