@@ -66,7 +66,10 @@ class CommitlintUtil {
     if (shouldBeIgnored(msg)) {
       return
     }
-    def lines = msg.split("\n")
+    def lines = msg
+      .split("\n")
+      .findAll { !it.trim().startsWith("#") }
+    
     def re = /^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z ]+\))?!?: .+$/
     if (!(lines[0] =~ re)) {
       throw new InvalidUserDataException(E_INVALID_TYPE)
