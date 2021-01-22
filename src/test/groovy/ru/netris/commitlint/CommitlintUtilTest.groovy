@@ -116,6 +116,27 @@ See merge request common/commitlint-plugin!2
     }
   }
 
+  @Test
+  void ignoreSquashAndFixupTest() {
+    final String msg1 = """fixup! feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
+    
+    final String msg2 = """squash! feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
+    
+    final String msg3 = """blablabla! feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
+    
+    util.validate(msg1)
+    util.validate(msg2)
+    assertThrows(InvalidUserDataException){ 
+      util.validate(msg3)
+    }
+  }
+  
   @Test 
   void commentedLineTest() {
     final String msg = """feat: Lorem ipsum dolor sit amet

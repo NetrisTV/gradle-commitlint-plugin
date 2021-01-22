@@ -15,12 +15,12 @@ class CommitlintUtil {
   
   static final List<Pattern> RE_TO_IGNORE = [
     ~/(?s)^((Merge pull request)|(Merge (.*?) into (.*?)|(Merge branch (.*?)))(?:\r?\n)*$)/,
-    ~/^(R|r)evert (.*)/,
-    ~/^(fixup|squash)!/,
-    ~/^Merged (.*?)(in|into) (.*)/,
-    ~/^Merge remote-tracking branch (.*)/,
-    ~/^Automatic merge(.*)/,
-    ~/^Auto-merged (.*?) into (.*)/
+    ~/(?s)^(R|r)evert (.*)/,
+    ~/(?s)^(fixup|squash)! (.*)/,
+    ~/(?s)^Merged (.*?)(in|into) (.*)/,
+    ~/(?s)^Merge remote-tracking branch (.*)/,
+    ~/(?s)^Automatic merge(.*)/,
+    ~/(?s)^Auto-merged (.*?) into (.*)/,
   ];
   
   /**
