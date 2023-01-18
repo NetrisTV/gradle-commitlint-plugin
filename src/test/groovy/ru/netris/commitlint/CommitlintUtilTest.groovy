@@ -20,7 +20,7 @@ exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
  dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
  proident, sunt in culpa qui officia deserunt mollit anim id 
 est laborum."""
-    util.validate(msg)
+    util.validate(msg, false)
   }
 
   @Test 
@@ -30,7 +30,7 @@ est laborum."""
 consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
  """
     assertThrows(InvalidUserDataException){ 
-      util.validate(msg)
+      util.validate(msg, false)
     }
   }
   
@@ -38,7 +38,7 @@ consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
   public void longSubjectTest() {
     final String msg = """chore: Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
     def ex = assertThrows(InvalidUserDataException){ 
-      util.validate(msg)
+      util.validate(msg, false)
     }
     
     assertEquals(util.E_LONG_SUBJECT, ex.getMessage())
@@ -49,7 +49,7 @@ consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
     final String msg = """chore: Lorem ipsum dolor sit amet 
 consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
     def ex = assertThrows(InvalidUserDataException) { 
-      util.validate(msg)
+      util.validate(msg, false)
     }
     assertEquals(ex.getMessage(), util.E_NO_BLANK_LINE)
   }
@@ -68,7 +68,7 @@ exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
 est laborum."""
     
     def ex = assertThrows(InvalidUserDataException) { 
-      util.validate(msg)
+      util.validate(msg, false)
     }
     assertEquals(ex.getMessage(), util.E_LONG_LINE)
   }
@@ -80,8 +80,8 @@ est laborum."""
 Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
     final String msg2 = "1.2.3"
 
-    util.validate(msg1)
-    util.validate(msg2)
+    util.validate(msg1, false)
+    util.validate(msg2, false)
   }
 
   @Test 
@@ -94,8 +94,8 @@ See merge request common/commitlint-plugin!2
 """
     final String msg2 = """Merged 'develop' into 'master'"""
 
-    util.validate(msg1)
-    util.validate(msg2)
+    util.validate(msg1, false)
+    util.validate(msg2, false)
   }
 
   @Test 
@@ -109,10 +109,10 @@ See merge request common/commitlint-plugin!2
     final String msg2 = """Merge 'develop' to 'master'"""
 
     def ex1 = assertThrows(InvalidUserDataException){ 
-      util.validate(msg1)
+      util.validate(msg1, false)
     }
     def ex2 = assertThrows(InvalidUserDataException){ 
-      util.validate(msg2)
+      util.validate(msg2, false)
     }
   }
 
@@ -130,10 +130,10 @@ consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
 
 consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
     
-    util.validate(msg1)
-    util.validate(msg2)
+    util.validate(msg1, false)
+    util.validate(msg2, false)
     assertThrows(InvalidUserDataException){ 
-      util.validate(msg3)
+      util.validate(msg3, false)
     }
   }
   
@@ -148,7 +148,55 @@ consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"""
  proident, sunt in culpa qui officia deserunt mollit anim id 
 est laborum."""
     
-    util.validate(msg)
+    util.validate(msg, false)
+  }
+
+  @Test 
+  void validMessageWithRefsTest() {
+    final String msg = """feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+ et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+
+refs #42"""
+
+    util.validate(msg, true)
+  }
+
+  @Test 
+  void messageWithoutRefsTest() {
+    final String msg = """feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+ et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+
+ dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+ proident, sunt in culpa qui officia deserunt mollit anim id 
+est laborum."""
+    
+    assertThrows(InvalidUserDataException){
+      util.validate(msg, true)
+    }
+  }
+
+  @Test 
+  void messageWithoutRefsNumberTest() {
+    final String msg = """feat: Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+ et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+
+refs #"""
+
+    assertThrows(InvalidUserDataException){
+      util.validate(msg, true)
+    }
   }
 
   

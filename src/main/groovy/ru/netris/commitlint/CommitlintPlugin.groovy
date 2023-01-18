@@ -11,6 +11,7 @@ import org.gradle.api.InvalidUserDataException
  */
 class CommitlintPlugin implements Plugin<Project> {
   void apply(Project project) {
+    def extension = project.extensions.create('commitlint', CommitlintPluginExtension)
     project.task("commitlint") {
       group = "Verification"
       description = "commit lint"
@@ -19,7 +20,7 @@ class CommitlintPlugin implements Plugin<Project> {
         def util = CommitlintUtil.instance
         String msg = new File(System.getProperty("msgfile", ".git/COMMIT_EDITMSG")).text
         try {
-          util.validate(msg)
+          util.validate(msg, extension.enforceRefs.getOrElse(false))
         } catch (InvalidUserDataException e) {
           throw new InvalidUserDataException(util.addANSIColor(e.getMessage(), 31))
         }
