@@ -9,6 +9,7 @@ class CommitlintUtil {
   final String E_LONG_SUBJECT = "Commit message does not follow 50/72 rule. See https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html"
   final String E_NO_BLANK_LINE = "Use blank line before BODY. https://www.conventionalcommits.org/en/v1.0.0/"
   final String E_LONG_LINE = "Commit message does not follow 50/72 rule. See https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html"
+  final String E_REFS_REQUIRED = "Commit message should contain issue reference in format 'refs #number'"
   // https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 
   static final Pattern RE_SEMVER = ~/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
@@ -60,9 +61,10 @@ class CommitlintUtil {
    * See https://www.conventionalcommits.org/en/v1.0.0/
    * See https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
    * @param {String} msg - Message to validate.
+   * @param {Boolean} enforceRefs - If presence of "refs #<issue>" is mandatory.
    * @throws {InvalidUserDataException}
    */
-  void validate(String msg) {
+  void validate(String msg, boolean enforceRefs) {
     if (shouldBeIgnored(msg)) {
       return
     }
@@ -82,6 +84,9 @@ class CommitlintUtil {
     }
     if(lines.size() > 2 && lines.any { it.size() > 72 }) {
       throw new InvalidUserDataException(E_LONG_LINE);
+    }
+    if (enforceRefs && !lines.any { it -> it ==~ /refs #([\d+]+)/}) {
+      throw new InvalidUserDataException(E_REFS_REQUIRED);
     }
   }
 }

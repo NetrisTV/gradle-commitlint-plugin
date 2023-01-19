@@ -23,6 +23,10 @@ githook {
     }
   }
 }
+
+commitlint {
+  enforceRefs = false
+}
 ```
 
 `settings.gradle`
